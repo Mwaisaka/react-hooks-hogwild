@@ -2,14 +2,17 @@ import React, { useState } from "react";
 import Nav from "./Nav";
 import Filter from "./Filter";
 import HogList from "./HogList";
+import AddHogForm from "./AddHogForm";
+import hogsData from "../porkers_data";
+import 'semantic-ui-css/semantic.min.css';
 
-
-import hogs from "../porkers_data";
+// import hogs from "../porkers_data";
 
 function App() {
 
 	const[showGreased, setShowGreased]=useState(false);
 	const[sortBy, setSortBy]=useState("name");
+	const [hogs, setHogs] = useState(hogsData);
 
 	const hogsToDisplay=hogs
 	.filter((hog)=>(showGreased? hog.greased : true))
@@ -21,12 +24,17 @@ function App() {
 	}
 });
 
+function handleAddHog(newHog) {
+
+    setHogs([...hogs, newHog]);
+  }
 	return (
 		<div className="ui grid container App">
       <div className="sixteen wide column centered">
         <Nav />
       </div>
       <div className="sixteen wide column centered">
+	  <AddHogForm onAddHog={handleAddHog} />
         <Filter
           showGreased={showGreased}
           onChangeShowGreased={setShowGreased}

@@ -1,5 +1,7 @@
+
 import React, { useState } from "react";
 import HogDetails from "./HogDetails";
+import { Card, Button } from "semantic-ui-react"; // import Semantic UI components
 
 function HogCard({ hog }) {
   const [isHidden, setIsHidden] = useState(false);
@@ -9,35 +11,34 @@ function HogCard({ hog }) {
     setShowDetails((prevShowDetails) => !prevShowDetails);
   }
 
-  // hide the hog
+  function handleHideClick() {
+    setIsHidden(true);
+  }
+
+  // Conditionally render the hog
   if (isHidden) return null;
 
-  // show the hog
   const { name, specialty, image } = hog;
 
   return (
-    <div className="ui card eight wide column pigTile">
+    <Card>
       <div className="image">
         <img src={image} alt="hogPic" />
       </div>
       <div className="content">
-        <h3 className="header">{name}</h3>
+        <Card.Header>{name}</Card.Header>
         <div className="description">Specialty: {specialty}</div>
       </div>
       <div className="extra content">
         {showDetails ? <HogDetails hog={hog} /> : null}
-
-        <button className="ui button" onClick={handleDetailsClick}>
+        <Button onClick={handleDetailsClick}>
           {showDetails ? "Less Info" : "More Info"}
-        </button>
-        <button className="ui button" onClick={() => setIsHidden(true)}>
-          Hide Me{" "}
-          <span role="img" aria-label="snout">
-            🐽
-          </span>
-        </button>
+        </Button>
+        <Button onClick={handleHideClick}>
+          Hide Me <span role="img" aria-label="snout">🐽</span>
+        </Button>
       </div>
-    </div>
+    </Card>
   );
 }
 
